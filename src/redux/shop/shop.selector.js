@@ -9,13 +9,21 @@ export const selectShopCollections = createSelector([selectShop], (shop) => {
 });
 
 export const selectCollectionPreview = createSelector([selectShopCollections], (collections) => {
-  return Object.keys(collections).map((key) => {
+  return collections ? Object.keys(collections).map((key) => {
     return collections[key]
-  });
+  }): [];
 });
 
 export const selectShopCollection = (categoryUrlParam) => {
   return createSelector([selectShopCollections], (collections) => {
-    return collections[categoryUrlParam];
+    return collections ? collections[categoryUrlParam]: null;
   });
 };
+
+export const selectShopIsFetching = createSelector([selectShop], (shop) => {
+  return shop.isFetching;
+});
+
+export const selectShopIsCollectionsAvailable = createSelector([selectShop], (shop) => {
+  return !!shop.collections;
+});
